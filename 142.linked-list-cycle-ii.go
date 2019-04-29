@@ -73,21 +73,18 @@
 func detectCycle(head *ListNode) *ListNode {
 	slow, fast := head, head
 	for slow != nil && fast != nil && fast.Next != nil {
-		slow, fast = slow.Next, fast.Next.Next
+		slow, fast = slow.Next, fast.Next.Next// 一定要先移动指针，再判断指针相等
 		if slow == fast {
-			break
-		}
-	}
-	// 典型错误，链表只有一个节点，slow和fast也相同
-	if slow == fast { //在此处追上，不代表此处就是环的起始位置
-		// slow和fast必须从头开始走，fast不能提前走,
-		// A从相遇的位置开始走，每次一步
-		// B从head开始，每次一步，相遇时即为环的第一个节点
-		slow = head
-		for slow != fast {
-			slow, fast = slow.Next, fast.Next
-		}
-		return slow
-	}
+			// 在此处追上，不代表此处就是环的起始位置
+			// slow和fast必须从头开始走，fast不能提前走,
+			// A从相遇的位置开始走，每次一步
+			// B从head开始，每次一步，相遇时即为环的第一个节点
+			slow = head
+			for slow != fast {
+				slow, fast = slow.Next, fast.Next
+			}
+			return slow
+			}
+	}	
 	return nil
 }

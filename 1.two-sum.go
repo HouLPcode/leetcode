@@ -8,6 +8,7 @@ func twoSum(nums []int, target int) []int {
 	cnt := []int{}
 	nummap := make(map[int]int,0)
 	// nums中的数值为k，位置为val
+	// 没必要首先遍历完所有数据，浪费时间和空间
 	for k,v := range nums{
 		nummap[v] = k
 	}

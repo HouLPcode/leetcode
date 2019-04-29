@@ -78,6 +78,7 @@ func detectCycle(head *ListNode) *ListNode {
 		slow,fast = slow.Next,fast.Next.Next
 	}
 	if slow == fast{// 在此处追上，不代表此处就是环的起始位置
+		// slow和fast必须从头开始走，fast不能提前走
 		// A从相遇的位置开始走，每次一步
 		// B从head开始，每次一步，相遇时即为环的第一个节点
 		slow = head

@@ -1,0 +1,2 @@
+1. reflect.DeepEqual，基本满足所有数据结构的需求，time不满足？？？？需要进一步确认
+2. 	"github.com/google/go-cmp/cmp" cmp.Equal(m1, m2) 

@@ -62,28 +62,30 @@
  */
 /**
  * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
+	* type ListNode struct {
+	*     Val int
+	*     Next *ListNode
+	* }
  */
 
  // 输出环的起始位置
+// 输出环的起始位置
 func detectCycle(head *ListNode) *ListNode {
-  if head == nil {
-		return nil
+	slow, fast := head, head
+	for slow != nil && fast != nil && fast.Next != nil {
+		slow, fast = slow.Next, fast.Next.Next
+		if slow == fast {
+			break
+		}
 	}
-	slow,fast := head,head.Next
-	for slow!=nil && fast!=nil &&fast.Next != nil && fast != slow{
-		slow,fast = slow.Next,fast.Next.Next
-	}
-	if slow == fast{// 在此处追上，不代表此处就是环的起始位置
-		// slow和fast必须从头开始走，fast不能提前走
+	// 典型错误，链表只有一个节点，slow和fast也相同
+	if slow == fast { //在此处追上，不代表此处就是环的起始位置
+		// slow和fast必须从头开始走，fast不能提前走,
 		// A从相遇的位置开始走，每次一步
 		// B从head开始，每次一步，相遇时即为环的第一个节点
 		slow = head
-		for slow != fast{
-			slow,fast = slow.Next,fast.Next
+		for slow != fast {
+			slow, fast = slow.Next, fast.Next
 		}
 		return slow
 	}

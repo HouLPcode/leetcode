@@ -12,47 +12,29 @@
  * }
  */
 func levelOrder(root *TreeNode) [][]int {
-	//怎么区分一层,两个队列交替使用实现分层？？？
-	out := [][]int{}
+	//怎么区分一层,
+	// 一次处理一层,每层生成一个[]slice，之后其添加到[][]
 	if root == nil{
-		return out
+		return [][]int{}
 	}
-	list1 := list.New()
-	list2 := list.New()
-	list1.PushBack(root)
-	i:=0
-	out = append(out,[]int{})
-	out[i] = append(out[i],root.Left.Val)
-	i++
-	for {
-		out = append(out,[]int{})
-		for list1.Len() != 0{
-			node := list1.Front()
-			list1.Remove(node)
+	out := [][]int{}
+	list := list.New()
+	list.PushBack(root)
+	for list.Front()!=nil{
+		levelLen := list.Len()
+		currentLevel := []int{}
+		for i :=0;i<levelLen;i++{
+			node := list.Front()
+			list.Remove(node)
+			currentLevel = append(currentLevel,node.Value.(*TreeNode).Val)
 			if node.Value.(*TreeNode).Left != nil{
-				out[i] = append(out[i],node.Value.(*TreeNode).Left.Val)
-				list2.PushBack(node.Value.(*TreeNode).Left)
+				list.PushBack(node.Value.(*TreeNode).Left)
 			}
 			if node.Value.(*TreeNode).Right != nil{
-				out[i] = append(out[i],node.Value.(*TreeNode).Right.Val)
-				list2.PushBack(node.Value.(*TreeNode).Right)
+				list.PushBack(node.Value.(*TreeNode).Right)
 			}
 		}
-		i++
-		out = append(out,[]int{})
-		for list2.Len() != 0{
-			node := list2.Front()
-			list2.Remove(node)
-			if node.Value.(*TreeNode).Left != nil{
-				out[i] = append(out[i],node.Value.(*TreeNode).Left.Val)
-				list1.PushBack(node.Value.(*TreeNode).Left)
-			}
-			if node.Value.(*TreeNode).Right != nil{
-				out[i] = append(out[i],node.Value.(*TreeNode).Right.Val)
-				list1.PushBack(node.Value.(*TreeNode).Right)
-			}
-		}	
-		i++
+		out = append(out,currentLevel)
 	}
 	return out
 }

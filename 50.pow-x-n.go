@@ -9,6 +9,7 @@ func myPow(x float64, n int) float64 {
 	}
 	// 非递归实现
 	out := float64(1.0)
+	//注意此处的实现方式，x每次平方，n每次减半，为奇数时获取输出值
 	for n != 0{
 		if n&1 == 1{
 			out *= x // 奇数多乘一个x

@@ -33,18 +33,11 @@ func topKFrequent(nums []int, k int) []int {
 	for _,v := range nums{
 		numsmap[v]++
 	}
-	// 2. 构建最大堆(堆结构怎么存储)
-	h := &MaxIntHeap{}
-	heap.Init(h)
-	for k,v := range numsmap{
-		heap.Push(h, Data{Key:k,Cnt:v})
-	}
+	// 2. 按照频次排序
 	
-	// 3. 每次弹出一个，弹出k次
+	// 3. 输出前k项
 	rnt := []int{}
-	for i:=0; i<k; i++{
-		rnt = append(rnt,heap.pop(h))
-	}
+	
 	return rnt
 }
 

@@ -7,25 +7,11 @@ type Data struct{
 	Key int
 	Cnt int
 }
+type ByCnt []Data
 
- type MaxIntHeap []Data
-
- func (h MaxIntHeap) Len() int           { return len(h) }
- //此处编译错误 non-integer slice index i
- func (h MaxIntHeap) Less(i, j Data) bool { return h[i].Cnt.(int) > h[j].Cnt.(int) }
- func (h MaxIntHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
- 
- func (h *MaxIntHeap) Push(x interface{}) {
-	 *h = append(*h, x.(Data))
- }
- 
- func (h *MaxIntHeap) Pop() interface{} {
-	 old := *h
-	 n := len(old)
-	 x := old[n-1]
-	 *h = old[0 : n-1]
-	 return x
- }
+func (h ByCnt) Len() int           { return len(h) }
+func (h ByCnt) Less(i, j int) bool { return h[i].Cnt > h[j].Cnt }
+func (h ByCnt) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
 
 func topKFrequent(nums []int, k int) []int {
 	// 1. 遍历数组，统计频次
@@ -33,11 +19,19 @@ func topKFrequent(nums []int, k int) []int {
 	for _,v := range nums{
 		numsmap[v]++
 	}
-	// 2. 按照频次排序
-	
-	// 3. 输出前k项
-	rnt := []int{}
-	
-	return rnt
+
+	rnt := ByCnt{}
+	for k,v := range numsmap{
+		rnt = append(rnt,Data{Key:k,Cnt:v})
+	}
+
+	// 2. 按照频次排序,对map排序？？？
+	sort.Sort(rnt)
+	// 3. 输出前k项,格式转换
+	rntInt := []int{}
+	for i:=0; i<k; i++{
+		rntInt = append(rntInt,rnt[i].Key)
+	}
+	return rntInt
 }
 

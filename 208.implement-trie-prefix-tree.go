@@ -4,7 +4,7 @@
  * [208] Implement Trie (Prefix Tree)
  */
 type Trie struct {
-	Alphs map[rune]Trie//??????
+	Alphs map[rune]*Trie//??????
 	IsWord bool
 }
 
@@ -12,7 +12,7 @@ type Trie struct {
 /** Initialize your data structure here. */
 func Constructor() Trie {
     return Trie{
-		Alphs:make(map[rune]Trie),
+		Alphs:make(map[rune]*Trie),
 		IsWord:false,//注意每个结尾都有逗号，否则编译报语法错误
 	}
 }
@@ -20,16 +20,17 @@ func Constructor() Trie {
 
 /** Inserts a word into the trie. */
 func (this *Trie) Insert(word string)  {
-	curNode := *this
+	curNode := this
 	// range string 
 	for _,v := range word{
 		// Trie 嵌套怎么实现
 		// 注意if后面用的是 ;
 		if _,ok := curNode.Alphs[v]; !ok{
 			// 这一句必须有，此时的map还没有make？？？Constructor()函数不是make了吗？？？？
-			curNode.Alphs = make(map[rune]Trie)
+			// curNode.Alphs = make(map[rune]Trie)
 			newNode := Constructor()
-			curNode.Alphs[v], curNode = newNode, newNode
+			curNode.Alphs[v] = &newNode
+			curNode = &newNode
 		}
 	}
 	// 赋值完之后，怎么对最后一个Trie.IsWord赋值true
@@ -39,7 +40,7 @@ func (this *Trie) Insert(word string)  {
 
 /** Returns if the word is in the trie. */
 func (this *Trie) Search(word string) bool {
-	curNode := *this
+	curNode := this
 	for _, v := range word{
 		if _, ok := curNode.Alphs[v]; !ok{
 			return false
@@ -52,7 +53,7 @@ func (this *Trie) Search(word string) bool {
 
 /** Returns if there is any word in the trie that starts with the given prefix. */
 func (this *Trie) StartsWith(prefix string) bool {
-    curNode := *this
+    curNode := this
 	for _, v := range prefix{
 		if _, ok := curNode.Alphs[v]; !ok{
 			return false

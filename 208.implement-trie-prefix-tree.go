@@ -24,10 +24,7 @@ func (this *Trie) Insert(word string)  {
 	// range string 
 	for _,v := range word{
 		// Trie 嵌套怎么实现
-		// 注意if后面用的是 ;
-		if _,ok := curNode.Alphs[v]; !ok{
-			// 这一句必须有，此时的map还没有make？？？Constructor()函数不是make了吗？？？？
-			// curNode.Alphs = make(map[rune]Trie)
+		if _,ok := curNode.Alphs[v]; !ok {// 注意if后面用的是 ;
 			curNode.Alphs[v] = &Trie{Alphs:make(map[rune]*Trie),}
 		}
 		curNode = curNode.Alphs[v]

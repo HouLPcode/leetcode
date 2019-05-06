@@ -4,7 +4,7 @@
  * [208] Implement Trie (Prefix Tree)
  */
 type Trie struct {
-	Alphs map[rune]*Trie//??????
+	Alphs map[rune]*Trie
 	IsWord bool
 }
 
@@ -28,10 +28,9 @@ func (this *Trie) Insert(word string)  {
 		if _,ok := curNode.Alphs[v]; !ok{
 			// 这一句必须有，此时的map还没有make？？？Constructor()函数不是make了吗？？？？
 			// curNode.Alphs = make(map[rune]Trie)
-			newNode := Constructor()
-			curNode.Alphs[v] = &newNode
-			curNode = &newNode
+			curNode.Alphs[v] = &Trie{Alphs:make(map[rune]*Trie),}
 		}
+		curNode = curNode.Alphs[v]
 	}
 	// 赋值完之后，怎么对最后一个Trie.IsWord赋值true
 	curNode.IsWord = true

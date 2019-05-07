@@ -9,7 +9,7 @@ func minimumTotal(triangle [][]int) int {
 	//所求值为f(0,0)
 	//已知道 f(最低,0...j) = triangle[最低][0...j] 
 
-	//???怎么range二维slice
+	//怎么range二维slice
 	rows,columns := len(triangle),len(triangle[len(triangle)-1])
 	mems := make(map[string]int)
 	rnt := help(0,0,rows,columns,triangle,mems)

@@ -16,6 +16,8 @@ func minimumTotal(triangle [][]int) int {
 	return rnt
 }
 
+//TODO 时间空间优化
+
 // 递归实现，超时
 func help(i,j,rows,cols int, nums [][]int, mems map[string]int) int{
 	if v,ok := mems[fmt.Sprint(i,"+",j)]; ok{

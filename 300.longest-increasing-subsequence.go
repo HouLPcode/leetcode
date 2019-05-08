@@ -14,16 +14,13 @@ func lengthOfLIS(nums []int) int {
 	lenMax := 1
 	lis := make([]int,len(nums),len(nums))//申请数组时不能使用变量长度？？？
 	for i:=0; i< len(nums); i++{
-		curMax := 1
-		for j:=0;j<i;j++{
+		lis[i] = 1
+		for j:=0;j<i;j++{// TODO 此处可以二分优化（非排序？？？）
 			if nums[j] < nums[i]{
-				curMax = max(curMax,lis[j]+1)
+				lis[i] = max(lis[i],lis[j]+1)
 			}
 		}
-		lis[i] = curMax
-		if curMax > lenMax{
-			lenMax = curMax
-		}
+		lenMax = max(lenMax,lis[i])
 	}
 	return lenMax
 }

@@ -13,23 +13,17 @@ type NumArray struct {
 
 
 func Constructor(nums []int) NumArray {
-	datas := make([]int,len(nums),len(nums))
+	// i+1存储前i项和，不包含i+1
+	datas := make([]int,len(nums)+1,len(nums)+1)
 	for k,v := range nums{
-		if k == 0{ // 怎么设计能不破坏for流水线？？？
-			datas[k] = v
-			continue
-		}
-		datas[k] = datas[k-1] + v 
+		datas[k+1] = datas[k] + v 
 	}
 	return NumArray{datas}
 }
 
 
 func (this *NumArray) SumRange(i int, j int) int {
-	if i == 0{
-		return this.datas[j]
-	}
-	return this.datas[j] - this.datas[i-1]
+	return this.datas[j+1] - this.datas[i]
 }
 
 

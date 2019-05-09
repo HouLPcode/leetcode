@@ -8,7 +8,6 @@
  //NumArray初始化的时候可以将NumArray[i]表示成前i项的和
  // 时间O(1) 空间O(n)
 type NumArray struct {
-	nums []int
 	datas []int
 }
 
@@ -22,12 +21,15 @@ func Constructor(nums []int) NumArray {
 		}
 		datas[k] = datas[k-1] + v 
 	}
-	return NumArray{nums,datas}
+	return NumArray{datas}
 }
 
 
 func (this *NumArray) SumRange(i int, j int) int {
-	return this.datas[j] - this.datas[i] + this.nums[i]
+	if i == 0{
+		return this.datas[j]
+	}
+	return this.datas[j] - this.datas[i-1]
 }
 
 

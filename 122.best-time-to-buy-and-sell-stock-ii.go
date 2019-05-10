@@ -18,6 +18,7 @@ func maxProfit(prices []int) int {
 	// 转移方程 f[i][0] = max( f[i-1][0],f[i-1][1]+prices[i])
 	// 		   f[i][1] = max(f[i-1][0]-prices[i],f[i-1][1])
 	// 最终结果f[i][0]
+	// TODO 存储空间优化
 	buf := make([][2]int,len(prices),len(prices))
 	buf[0][1] = -prices[0]
 

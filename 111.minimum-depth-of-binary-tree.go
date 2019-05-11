@@ -13,9 +13,10 @@
  */
  // 递归实现
 func minDepth(root *TreeNode) int {
-    if root == nil{
+  if root == nil{
 		return 0
 	}
+	// 这一步必不可少
 	if root.Left == nil || root.Right == nil{
 		return 1 + minDepth(root.Right) + minDepth(root.Left)
 	}

@@ -19,6 +19,7 @@ func threeSum(nums []int) [][]int {
 				continue
 			}
 			if _,ok := bufmap[-v1-v2]; ok{
+				// 典型错误，这样输出结果有重复
 				rtn = append(rtn,[]int{v1,v2,-v1-v2})
 			}
 		}

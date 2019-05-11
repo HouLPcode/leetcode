@@ -11,7 +11,7 @@
  *     Right *TreeNode
  * }
  */
- // 没有采用尾递归
+ // 前序遍历，没有采用尾递归
 func isSameTree(p *TreeNode, q *TreeNode) bool {
     if p == nil && q == nil{// 结束条件1
 		return true

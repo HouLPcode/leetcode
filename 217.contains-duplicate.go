@@ -4,12 +4,14 @@
  * [217] Contains Duplicate
  */
 func containsDuplicate(nums []int) bool {
-	// 先排序，后查重
-	sort.Ints(nums)
-	for i:=0; i < len(nums)-1; i++{
-		if nums[i] == nums[i+1]{
+	//法1 先排序，后查重
+	// 法2 map
+	buf := make(map[int]bool)
+	for _,v := range nums{
+		if _,ok := buf[v]; ok{
 			return true
 		}
+		buf[v] = true
 	}
 	return false
 }

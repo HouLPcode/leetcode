@@ -1,0 +1,67 @@
+图的遍历
+
+深度遍历， 递归, 推荐使用该方法，容易理解
+func dfs(node TreeNode,visited map[Treenode]bool){ // 指针？？？
+    visited[node] = true
+    //处理当前节点
+
+    // 处理子节点
+    for nextNode := range node.Childen(){
+        if _,ok := visited[nextNode]; !ok{
+            //没有访问过
+            dfs(nextNode,visited) // 递归调用
+        }
+    }
+}
+
+深度遍历，非递归
+func dfs(root TreeNode){
+    if root == nil{
+        return 
+    }
+    stack := [] //创建栈
+    visited := make(map[Treenode]bool)
+    stack.push(root)  // 根节点入栈
+    for !stack.Isempty{ //非空
+        node := stack.Pop()//出栈一个元素
+        visited[node] = true
+
+        // 处理当前节点
+
+        for nodeNext := range node.Childen{
+            if _,ok := visited[nodeNext]; !ok{
+                stack.Push(nodeNext)
+            }
+        }
+    }
+}
+
+广度优先， 递归
+func bfs(node TreeNode, visited map[TreeNode]bool){
+    
+}
+
+广度优先， 非递归
+func bfs(root TreeNode){
+    if root == nil{
+        return 
+    }
+
+    queue = [] //创建队列
+    visited := make(map[TreeNode]bool)
+
+    queue.push(root) // 入队
+    visited[root] = true
+
+    for !queue.Isempty(){
+        node = queue.Pop()//出队
+        visited[node] = true
+        
+        // 处理node节点
+
+        //自队列入队
+        for nodeNext := range node.Childen(){
+            queue.push(nodeNext)
+        }
+    }
+}

@@ -38,7 +38,7 @@
  // go 支持多值同时赋值，不需要考虑赋值顺序
  // TODO 递归实现
 func reverseList(head *ListNode) *ListNode {
-	var cur,prev *ListNode = head,nil
+	var cur,prev *ListNode = head,nil // 注意赋值 pre=nil
 
 	for cur != nil {
 		cur.Next,prev,cur = prev,cur,cur.Next //同时赋值，顺序不要紧

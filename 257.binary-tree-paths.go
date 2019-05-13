@@ -12,9 +12,10 @@
  * }
  */
 func binaryTreePaths(root *TreeNode) []string {
-    if root == nil{
+  if root == nil{
 		return []string{}
 	}
+	// 不使用辅助函数怎么做？？？？？
 	rnt := []string{}
 	// 注意传入的指针和string的对应关系
 	path(root,fmt.Sprint(root.Val),&rnt)// string(root.Val)可能是\u0001
@@ -23,7 +24,6 @@ func binaryTreePaths(root *TreeNode) []string {
 }
 
 // []string需要是指针类型
-
 func path(root *TreeNode, tmp string,rnt *[]string){
 	if root.Left == nil && root.Right == nil{
 		//  ["->1->2->5","->1->3"]

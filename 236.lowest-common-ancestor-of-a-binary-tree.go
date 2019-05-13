@@ -21,7 +21,7 @@
   if left == nil {
 	  return right
   }else if right == nil{
-	return left
+	  return left
   }
   return root
 }

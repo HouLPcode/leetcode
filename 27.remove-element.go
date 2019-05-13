@@ -14,13 +14,14 @@ func removeElement(nums []int, val int) int {
 		return 0
 	}
 	cnt := 0
-	for i != j{
+	for i != j{ //改成 i<j 是不是能加速
 		if nums[i] == val && nums[j] == val{
 			j--
 		}else if nums[i] == val && nums[j] != val{
 			// cnt += 1
 			nums[i], nums[j] = nums[j], nums[i]
-			// j--
+			// j-- 同时移动两个指针，有可能导致 i>j
+			// i++
 		}else if nums[i] != val && nums[j] == val{
 			j--
 		}else{

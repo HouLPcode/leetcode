@@ -5,14 +5,21 @@
  */
 func lengthOfLastWord(s string) int {
 	// "a " 末尾空格要忽略
-	cnt := 0
-	l := len(s)-1
-	//跳过末尾的n多空格
-	for ;l>=0&&s[l]==byte(' ');l--{}
-	for ;l>=0&&s[l]!=byte(' ');l--{
-		cnt++
+	pri,cnt := 0,0//通过pri暂存之前的结果，避免末尾多个0的清空
+	for _,v := range []byte(s){
+		if v == byte(' '){
+			if cnt == 0{
+				continue
+			}else{
+				pri,cnt = cnt,0
+			}
+		}else{
+			cnt++
+		}
 	}
-
-	return cnt
+	if cnt > 0{
+		return cnt
+	}
+	return pri
 }
 

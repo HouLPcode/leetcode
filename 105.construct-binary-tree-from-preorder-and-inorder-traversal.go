@@ -15,7 +15,7 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
     if len(preorder) == 0 && len(inorder) == 0{
 		return nil
 	}
-	// 注意
+	// 注意 1个节点没必要单独出来
 	// if len(preorder) == 1 && len(inorder) == 1{
 	// 	return &TreeNode{
 	// 		Val:preorder[0],
@@ -48,10 +48,9 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 		lpreorder = preorder[1:len(linorder)+1]
 	}
 	
-	root := TreeNode{
+	return &TreeNode{
 		Val:rootVal,
 		Left:buildTree(lpreorder,linorder),
 		Right:buildTree(rpreorder,rinorder)}
-	return &root
 }
 

@@ -27,7 +27,7 @@ func path(root *TreeNode,sum int, curSum int, tmp []int, rnt *[][]int){
 		}
 		return
 	}
-	if root.Left !=nil{
+	if root.Left != nil{
 		path(root.Left,sum,curSum+root.Val,append(tmp,root.Val),rnt)
 	}
 	if root.Right != nil{

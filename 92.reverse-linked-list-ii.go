@@ -16,8 +16,9 @@ func reverseBetween(head *ListNode, m int, n int) *ListNode {
 		pri,cur = cur, cur.Next
 	}
 
-	pripri := pri //pripri指向翻转节点的前一个节点，可以是nil
-	for cnt:=n-m+1;cnt>0;cnt--{
+	//一定记录前一个节点，用来连接翻转后的局部链表
+	pripri := pri//pripri指向翻转节点的前一个节点，可以是nil 
+	for cnt:=n-m+1; cnt>0; cnt--{
 		pri,cur,cur.Next = cur,cur.Next,pri
 	}
 	

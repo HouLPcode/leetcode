@@ -14,17 +14,15 @@
  // 递归实现
 func inorderTraversal(root *TreeNode) []int {
 	// 怎么把节点值存储在[]int 中
-    rnt := []int{} 
-	inorder(root,&rnt)
-	return rnt
-}
-
-func inorder(root *TreeNode, rnt *[]int){
 	if root == nil{
-		return 
+		return []int{}
 	}
-	inorder(root.Left, rnt)
-	*rnt = append(*rnt,root.Val)
-	inorder(root.Right, rnt)
+	rnt := []int{} 
+	lefts := inorderTraversal(root.Left)
+	rights := inorderTraversal(root.Right)
+	rnt = append(rnt, lefts...)
+	rnt = append(rnt, root.Val)
+	rnt = append(rnt, rights...)
+	return rnt
 }
 

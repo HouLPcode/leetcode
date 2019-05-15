@@ -3,32 +3,31 @@
  *
  * [397] Integer Replacement
  */
+ // 三个测试集 1234(14)，65535(17)，10000(16),尤其是10000
 func integerReplacement(n int) int {
 	// n=0不可能变成1
-	// 注意 奇数++或--的结果不一样 1234，65535
+	// 注意 奇数++或--的结果不一样 1234(14)，65535(17)，10000
 	// 什么时候++ 什么时候--
-	cnt1 := 0
-	for num1 := n; num1 != 1;{
-		if num1 & 1 == 1{
-			num1++ //
+	
+	// 递归试试
+	cnt := 0
+	for  n != 1{
+		if n & 1 == 1{
+			// 注意此处是cnt的累加
+			cnt = cnt + 1 + min(integerReplacement(n+1),integerReplacement(n-1))
+			break
 		}else{
-			num1 >>= 1
+			n >>= 1
+			cnt++
 		}
-		cnt1++
 	}
+	return cnt
+}
 
-	cnt2 := 0
-	for num2 :=n; num2 != 1;{
-		if num2 & 1 == 1{
-			num2-- //
-		}else{
-			num2 >>= 1
-		}
-		cnt2++
+func min(a,b int)int{
+	if a < b{
+		return a
 	}
-	if cnt1 > cnt2{
-		return cnt2
-	}
-	return cnt1
+	return b
 }
 

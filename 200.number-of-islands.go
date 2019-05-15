@@ -17,31 +17,37 @@
 		roots[k] = k
 	}
 	rank := make([]int, rows*cols, rows*cols)
-	tmp := make(map[int]bool)
 	for i := 0; i < rows; i++ { // 只有一行或一列，2行，2列时候怎么处理
 		for j := 0; j < cols; j++ {
 			// 合并 每个节点的上下左右？？？ 移动数组
 			if grid[i][j] == '1' {
 				if i > 0 && grid[i-1][j] == '1' { //注意grid中是 '1'，此处应该传入i*j+j坐标
-					tmp[union(&roots, &rank, i*cols+j, (i-1)*cols+j)] = true
+					union(&roots, &rank, i*cols+j, (i-1)*cols+j)
 				}
 				if i+1 < rows && grid[i+1][j] == '1' {
-					tmp[union(&roots, &rank, i*cols+j, (i+1)*cols+j)] = true
+					union(&roots, &rank, i*cols+j, (i+1)*cols+j)
 				}
 				if j > 0 && grid[i][j-1] == '1' {
-					tmp[union(&roots, &rank, i*cols+j, i*cols+j-1)] = true
+					union(&roots, &rank, i*cols+j, i*cols+j-1)
 				}
 				if j+1 < cols && grid[i][j+1] == '1' {
-					tmp[union(&roots, &rank, i*cols+j, i*cols+j+1)] = true
+					union(&roots, &rank, i*cols+j, i*cols+j+1)
 				}
 				//union之后才能决定该点的parent
-				// union 中的parent可能在后续过程中不在是parent，此处计算多了
-				tmp[findParent(roots, i*cols+j)] = true //把该节点的parent加入，避免整图只有1个点的未统计
+				//tmp[findParent(roots, i*cols+j)] = true //把该节点的parent加入，避免整图只有1个点的未统计
 			}
 		}
 	}
-	//统计个数
-	return len(tmp) // tmp中的parent有的已经不再是parent了，计数大了
+	//统计个数，不能简单的统计tmp的长度
+	tmp := make(map[int]bool)
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			if grid[i][j]=='1'{
+				tmp[findParent(roots, i*cols+j)] = true
+			}
+		}
+	}
+	return len(tmp)
 }
 
 func findParent(roots []int, x int) int {

@@ -37,7 +37,7 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 	var lpreorder,rpreorder,linorder,rinorder []int
 	if i == 0{//无左子树
 		rpreorder = preorder[1:]
-		rinorder = inorder[i+1:] //越界
+		rinorder = inorder[i+1:] //这样访问不会越界,i+2会越界
 	}else if i == len(inorder) -1{//无右子树
 		lpreorder = preorder[1:]
 		linorder = inorder[:i]

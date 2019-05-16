@@ -6,6 +6,7 @@
 // 参考leetcode 113
 // 测试集 [1,0] 1
 // DFS 递归思路
+// TODO 动态规划？？？
 func findTargetSumWays(nums []int, S int) int {
 	//构成二叉树，得到所有路径的sum，然后遍历sum值为S的个数
 	cnt := 0

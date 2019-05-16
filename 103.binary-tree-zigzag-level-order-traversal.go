@@ -12,38 +12,50 @@
  * }
  */
 // 典型错误，不能一次遍历从左往右，下一次从右向左，因为出队的序列决定过了子节点在整层遍历中的序列
+// 方法1， 正常增次遍历，之后隔行将[]int翻转
+// 方法2， 双端链表替代普通queue，每次从不同的方向遍历
 func zigzagLevelOrder(root *TreeNode) [][]int {
+	if root == nil{
+		return [][]int{}
+	}
+
 	rnt := [][]int{}
-	
-	// 队列
 	queue := list.New()
-	// 入队
 	queue.PushBack(root)
 	for queue.Front() != nil{
 		tmp := []int{}
-		for node := queue.Front(); node != nil;{
-			queue.Remove(node)//出队
-			tmp = append(tmp, node.(TreeNode).Val)
-			if node.(*TreeNode).Right != nil{
-				queue.PushBack(node.(*TreeNode).Right)
+		l := queue.Len()
+		for i:=0; i<l; i++{
+			node := queue.Front() //左右出队
+			queue.Remove(node)
+			tmp = append(tmp, node.Value.(*TreeNode).Val)
+			if node.Value.(*TreeNode).Left != nil{ //左右后面入队
+				queue.PushBack(node.Value.(*TreeNode).Left)
 			}
-			if node.(*TreeNode).Left != nil{
-				queue.PushBack(node.(*TreeNode).Left)
-			}
+			if node.Value.(*TreeNode).Right != nil{
+				queue.PushBack(node.Value.(*TreeNode).Right)
+			}	 
 		}
-		rnt = append(rnt,tmp)
+		rnt = append(rnt, tmp)
 		tmp = []int{}
-		for node := queue.Front(); node != nil;{
-			queue.Remove(node)//出队
-			tmp = append(tmp,node.(*TreeNode).Val)
-			if node.Left != nil{
-				queue.PushBack(node.Left)
-			}
-			if node.Right != nil{
-				queue.PushBack(node.Right)
-			}	
+		l = queue.Len()
+		if l == 0{
+			break //奇数层 ，退出循环，防止后面对个[]
 		}
-		rnt = append(rnt,tmp)
+		for i:=0; i<l; i++{
+			node := queue.Back() // 右左出队
+			queue.Remove(node) 
+
+			tmp = append(tmp, node.Value.(*TreeNode).Val)
+
+			if node.Value.(*TreeNode).Right != nil{ //右左前面入队
+				queue.PushFront(node.Value.(*TreeNode).Right)
+			} 
+			if node.Value.(*TreeNode).Left != nil{
+				queue.PushFront(node.Value.(*TreeNode).Left)
+			}  
+		}
+		rnt = append(rnt, tmp)
 	}
 	return rnt
 }

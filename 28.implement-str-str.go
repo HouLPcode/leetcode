@@ -4,6 +4,7 @@
  * [28] Implement strStr()
  */
  // "aaa"\n"aaaa" 注意needle在haystack末尾时的情况
+ // KMP算法？？？
 func strStr(haystack string, needle string) int {
     if len(needle) == 0{
 		return 0

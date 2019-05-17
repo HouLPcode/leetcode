@@ -4,7 +4,9 @@
  * [283] Move Zeroes
  */
 func moveZeroes(nums []int)  {
-	//两个指针
+	// 两个指针
+	// p0从头找0，px从p0后面找非0
+	// 找到后交换元素，p0++，px=p0+1
 	p0,px := 0,0
 	for {
 		//找p0,p0前面都是处理完元素

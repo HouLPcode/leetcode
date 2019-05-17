@@ -4,7 +4,8 @@
  * [5] Longest Palindromic Substring
  */
  // dp *****典型错误******* 当前的回文不一定是前面的回文+最后一个字符，可能是左边也扩展一个字符
-func longestPalindrome(s string) string {
+// 包含当前节点的回文等于前一个回文前后各扩展一个字符
+ func longestPalindrome(s string) string {
 	// 找到字符串中的最长回文子串
 	// df 尝试
 	// f(i) 包含第i字符的最长回文  ?????不包含i字符是不是可以直接递归本函数

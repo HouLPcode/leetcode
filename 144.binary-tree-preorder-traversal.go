@@ -12,16 +12,26 @@
  * }
  */
 func preorderTraversal(root *TreeNode) []int {
-	// 递归
+	// 非递归 ， 栈， 右左入栈
 	if root == nil{
 		return []int{}
 	}
 	rtn := []int{}
-	lnodes := preorderTraversal(root.Left)
-	rnodes := preorderTraversal(root.Right)
-	rtn = append(rtn,root.Val)
-	rtn = append(rtn, lnodes...)
-	rtn = append(rtn, rnodes...)
+	stack := []*TreeNode{}//注意栈存的是节点，不是节点的内容
+	stack = append(stack, root)
+	for len(stack) != 0 {
+		node := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+
+		rtn = append(rtn, node.Val)
+		
+		if node.Right != nil{
+			stack = append(stack, node.Right)
+		}
+		if node.Left != nil{
+			stack = append(stack, node.Left)
+		}
+	}
 	return rtn
 }
 

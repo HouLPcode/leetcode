@@ -12,7 +12,7 @@
  */
  // 方法1: 暴力合并，每轮筛选出一个最小node加入链表，O(kkn),k表示链表数，每个链表平均n个节点
 //  方法2: map缓存后排序，O(knlog(kn))
- // 方法3: 分治法，两两合并 O(knlogk)
+ // 方法3: 分治法，两两合并 O(knlogk)  每个请款都差不多，两两合并，适合分治法
 func mergeKLists(lists []*ListNode) *ListNode {
     if len(lists) == 0{
 		return nil

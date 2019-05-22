@@ -2,13 +2,14 @@
 
 深度遍历， 递归, 推荐使用该方法，容易理解
 func dfs(node TreeNode,visited map[Treenode]bool){ // 指针？？？
+    
+    // 标记节点被访问过
     visited[node] = true
+
     //处理当前节点
 
-    // 处理子节点
-    for nextNode := range node.Childen(){
-        if _,ok := visited[nextNode]; !ok{
-            //没有访问过
+    for nextNode := range node.Childen(){//遍历该节点的所有字节点
+        if _,ok := visited[nextNode]; !ok{             //没有访问过
             dfs(nextNode,visited) // 递归调用
         }
     }

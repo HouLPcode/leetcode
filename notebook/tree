@@ -1,0 +1,64 @@
+先序遍历 非递归
+func preOrder(root){
+    if root == nil {}
+    stack.Push(root) // 头节点入栈
+    for stack.IsEmpty() == false{ // 栈非空
+        node := stack.Pop() // *****出栈，先右孩子入栈，左做孩子入栈*****
+        //访问节点node
+		if node.Right != nil{
+            stack.Push(node.Right) 
+        }
+        if node.Left != nil{
+            stack.Push(node.Left)
+        }
+    }
+}
+
+中序遍历， 非递归
+func inorderTraversal(root *TreeNode){ leetcode 94
+	if root == nil{}
+	stack := []*TreeNode{} // 初始空栈，不需要root入栈
+	for len(stack) > 0 || root != nil{ // 注意此处不能只判断栈空
+		if root != nil{ // 注意此处不能是循环
+			stack = append(stack,root)
+			root = root.Left
+		}else{
+			// 出栈
+			root,stack = stack[len(stack)-1],stack[:len(stack)-1]
+            // 访问根节点
+			
+            // 指向右节点
+			root = root.Right
+		}
+	}
+}
+
+后序，非递归
+// 非递归，后序，1个栈
+func postorderTraversal(root *TreeNode) []int {
+	if root == nil{
+		return []int{}
+	}
+	var top *TreeNode = nil
+	stack := []*TreeNode{}
+	rnt := []int{}
+	// 头节点入栈
+	stack = append(stack, root)
+	for len(stack) > 0{
+		top = stack[len(stack)-1]
+
+		if top.Left!=nil && top.Left!=root && top.Right!=root{
+			stack = append(stack, top.Left)
+		}else if top.Right!=nil && top.Right!=root{
+			stack = append(stack, top.Right)
+		}else{
+			//访问栈顶元素
+			root = top
+			// 出栈
+			top,stack = stack[len(stack)-1],stack[:len(stack)-1]
+			// 访问站定元素
+			rnt = append(rnt, top.Val)
+		}
+	}
+	return rnt
+}

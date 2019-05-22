@@ -1,0 +1,47 @@
+append 用法，直接在len(nums)-1后面添加元素,有空间直接使用，没有空间创建空间后使用
+/*
+ * @lc app=leetcode id=155 lang=golang
+ *
+ * [155] Min Stack
+ */
+ // 创建一个辅助栈空间，维持栈的最小元素
+ // 入栈值比当前值小，则该值入栈，否则最小值入栈
+type MinStack struct {
+	Data []int
+	Min []int
+}
+
+
+/** initialize your data structure here. */
+func Constructor() MinStack {
+    return MinStack{
+		[]int{},
+		[]int{},
+	}
+}
+// "push","push","push","push","getMin","pop","getMin","pop","getMin","pop","getMin"]
+//   [2],   [0],   [3],   [0],    [],     [],    [],     [],    [],     [],    []]'
+
+
+func (this *MinStack) Push(x int)  {
+	if cap(this.Data) == 0{
+		this.Data = append(this.Data,x)
+		this.Min = append(this.Min,x)
+	}else if cap(this.Data) == len(this.Data){
+		this.Data = append(this.Data,x)
+		if this.Min[len(this.Min)-1] > x{ // 非空
+			this.Min = append(this.Min,x)
+		}else{
+			this.Min = append(this.Min,this.Min[len(this.Min)-1])
+		}
+	}else{
+		this.Data[len(this.Data)] = x
+		if this.Min[len(this.Min)-1] > x{ // 非空
+			this.Min[len(this.Min)] = x
+		}else{
+			this.Min[len(this.Min)] = this.Min[len(this.Min)-1]
+		}
+	}
+}
+
+

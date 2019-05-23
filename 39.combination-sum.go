@@ -23,18 +23,13 @@ func generate(k int, path []int, candidates []int, target int, sum int, result *
 	}else if sum > target{
 		return
 	}
-	// 下面这样没有循环的话会有重复元素
 	// 使用该元素，单次或者多次
-	// for ; k<len(candidates); k++ {
+	for ; k<len(candidates); k++ {
 		generate(k, append(path,candidates[k]), candidates, target, sum+candidates[k], result)
 		copy(path, pathCopy)
-	// } 
-
-	generate(k+1, append(path,candidates[k]), candidates, target, sum+candidates[k], result)
-	copy(path, pathCopy)
-
+	} 
 	// 不使用该元素
-	// for ; k<len(candidates); k++ {
-		generate(k+1, path, candidates, target, sum, result)
-	// } 
+	for ; k<len(candidates); k++ {
+		generate(k, path, candidates, target, sum, result)
+	} 
 }

@@ -19,8 +19,8 @@
 			}
 		}
 		data := make([]int, len(path))
-        sort.Ints(path) // 题目中没有要求此处必须排序
-        copy(data, path)
+		copy(data, path)
+		sort.Ints(data)// 题目中没有要求此处必须排序
 		result = append(result, data)
 	}
 	return result

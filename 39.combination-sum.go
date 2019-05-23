@@ -14,22 +14,19 @@ func generate(k int, path []int, candidates []int, target int, sum int, result *
 	if k == len(candidates){
 		return 
 	}
-	pathCopy := make([]int, len(path))
-	copy(pathCopy, path)
 	
 	if sum == target{
+		pathCopy := make([]int, len(path))
+		copy(pathCopy, path)
 		*result = append((*result), pathCopy)
 		return 
 	}else if sum > target{
 		return
 	}
-	// 使用该元素，单次或者多次
-	for ; k<len(candidates); k++ {
-		generate(k, append(path,candidates[k]), candidates, target, sum+candidates[k], result)
-		copy(path, pathCopy)
-	} 
+
+	// 使用该元素，此处不是k+1，表示可以使用多次该元素
+	path = append(path,candidates[k])
+	generate(k, path, candidates, target, sum+candidates[k], result)
 	// 不使用该元素
-	for ; k<len(candidates); k++ {
-		generate(k, path, candidates, target, sum, result)
-	} 
+	generate(k+1, path[:len(path)-1], candidates, target, sum, result)
 }

@@ -11,16 +11,19 @@ func longestPalindrome(s string) int {
 		alp[s[i]]++
 	}
 	cnt := 0
-	mflag := false // 标记是否有奇数剩余
+	// mflag := false // 标记是否有奇数剩余
 	for _,v := range alp{
 		if v & 1 == 0{
 			cnt += v
 		}else{
 			cnt += v -1
-			mflag = true
+			// mflag = true
 		}
 	}
-	if mflag{
+	// if mflag{
+	// 	cnt++
+	// }
+	if cnt < len(s){
 		cnt++
 	}
 	return cnt

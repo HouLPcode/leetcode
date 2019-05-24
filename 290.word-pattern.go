@@ -25,6 +25,6 @@ func wordPattern(pattern string, str string) bool {
 			return false
 		}
 	}
-	return true	
+	return true	//退出上面的循环，在pattern比strs长的时候回出错
 }
 

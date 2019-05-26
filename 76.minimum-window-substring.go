@@ -3,51 +3,51 @@
  *
  * [76] Minimum Window Substring
  */
+//  双指针和map缓存
+// 1. map中缓存t总每个字符出现的次数
+// 2. 双指针p1 p2组成窗口，统计窗口中每个字母出现的顺序，且比较s是否包含t
+// 3. 当p1字符不在t中或数量大于t中数量的时候，尽可能的右移p1
+// "a"\n"b"
+// "ab"\n"A"
+// "a"\n"a"
+// "bba"\n"ab"
  func minWindow(s string, t string) string {
 	minstr := ""
 	minlen := len(s) // ?????
-	// tMap := make(map[byte]bool, 128)
-	// for i:=0; i<len(t); i++{
-	// 	tMap[t[i]] = true
-	// }
-	for p1, p2 := 0, len(t)-1; p2 < len(s); p2++ {
-		// T中一个也不包含，p1++
-		if find(s[p1:p2+1], t) == false {
+	tMap := make(map[byte]int, 128)
+	for i:=0; i<len(t); i++{
+		tMap[t[i]]++
+	}
+	windowMap := make(map[byte]int, 0)
+	for p1, p2 := 0, 0; p2 < len(s); p2++ {
+		windowMap[s[p2]]++
+		// 一定注意此处的p1<p2的条件，保证下面语句不越界s[p1]，s[p1:p2+1]
+		for p1 < p2 && tMap[s[p1]]==0 { //p1不是t中字符
+			windowMap[s[p1]]--
 			p1++
-		} else if findAll(s[p1:p2+1], t) { // 区间中包含全部T字母
+		}
+		for p1 < p2 && windowMap[s[p1]] > tMap[s[p1]] { // p1数量多
+			windowMap[s[p1]]--
+			p1++
+		} 
+		if findAll(windowMap, tMap) == true{ // 区间中包含全部T字母
 			// 此时p2存储的是T中的某个字符
-			if p2-p1+1 < minlen {
+			if p2-p1+1 <= minlen {// 注意此处是<=,保证初始更新 "a" "a"的情况
 				minlen = p2 - p1 + 1
 				minstr = s[p1 : p2+1]
 			}
-			p1++ //待优化，p1应该移动到第一个T中第二次出现的字母的位置
+			windowMap[s[p1]]--
+			p1++ //待优化，p1应该移动到T中第二次出现的字母的位置
 		}
 	}
 	return minstr
 }
 
-// ****************典型错误： 目标t中也可能有重复字符串*********
-// bitmap 两个int64表示每个字符串中出现的字符，重复的计1次
-func find(s, t string) bool { //包含t中某字母
-	sb := str2bits(s)
-	tb := str2bits(t)
-	return sb[0]&tb[0] != 0 || sb[1]&tb[1] != 0
-}
-
-func findAll(s, t string) bool { //包含t中某字母
-	sb := str2bits(s)
-	tb := str2bits(t)
-	return (sb[0]&tb[0] == tb[0]) && (sb[1]&tb[1] == tb[1])
-}
-
-func str2bits(s string) [2]uint64 {
-	strbits := [2]uint64{0, 0}
-	for i := 0; i < len(s); i++ {
-		if s[i] < byte(64) {
-			strbits[0] |= 1 << s[i]
-		} else {
-			strbits[1] |= 1 << (s[i] - 64)
+func findAll(smap, tmap map[byte]int) bool { //包含t中某字母
+	for k,v := range tmap{
+		if smap[k] < v{
+			return false
 		}
 	}
-	return strbits
+	return true
 }

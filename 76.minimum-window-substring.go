@@ -14,11 +14,12 @@
  func minWindow(s string, t string) string {
 	minstr := ""
 	minlen := len(s) // ?????
-	tMap := make(map[byte]int, 128)
+	// tMap := make(map[byte]int, 128) 
+	tMap := make([]int, 128)// 注意：字符map可以用128字节[]int代替，
 	for i:=0; i<len(t); i++{
 		tMap[t[i]]++
 	}
-	windowMap := make(map[byte]int, 0)
+	windowMap := make([]int, 128)
 	for p1, p2 := 0, 0; p2 < len(s); p2++ {
 		windowMap[s[p2]]++
 		// 一定注意此处的p1<p2的条件，保证下面语句不越界s[p1]，s[p1:p2+1]
@@ -43,7 +44,7 @@
 	return minstr
 }
 
-func findAll(smap, tmap map[byte]int) bool { //包含t中某字母
+func findAll(smap, tmap []int) bool { //包含t中某字母
 	for k,v := range tmap{
 		if smap[k] < v{
 			return false

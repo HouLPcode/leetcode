@@ -3,36 +3,56 @@
  *
  * [127] Word Ladder
  */
-//  由于需要找的是最短路径，所以要用BFS，第一次找到目标节点即为最短路径。DFS找到的不是最短
- func ladderLength(beginWord string, endWord string, wordList []string) int {
-	depth := 0 //bfs怎么统计图的深度
+//  双向BFS
+func ladderLength(beginWord string, endWord string, wordList []string) int {
+	// 特殊处理下endWord不在wordList中的情景
+	if hasEndWord(endWord, wordList) == false{
+		return 0
+	}
+	depth := 0
 	visited := make(map[string]bool, len(wordList))
-	queue := list.New()
 
-	//visited[beginWord] = true
-	queue.PushBack(beginWord)
-	for queue.Front() != nil {
+	// 使用两个map，表示头尾的遍历，不需要queue
+	map1 := make(map[string]bool, 0)
+	map2 := make(map[string]bool, 0)
+	map1[beginWord] = true //首尾节点入栈
+	map2[endWord] = true
+	visited[beginWord] = true
+	visited[endWord] = true
+
+	for len(map1) != 0{
 		depth++
-		for size := queue.Len(); size > 0; size-- { // *****注意此处的处理方式，一次处理一层
-			node := queue.Front()
-			queue.Remove(node)
-			visited[node.Value.(string)] = true //出队列的时候标记为已访问
-			if node.Value.(string) == endWord {
-				return depth
-			}
-			for _, nextNode := range connect(node.Value.(string), wordList) {
-				if visited[nextNode] == false {
-					queue.PushBack(nextNode)
+		tmpMap := make(map[string]bool, 0)// 存储子节点
+		for k := range map1{
+			nexts := connect(k, wordList)
+			for _,next := range nexts{
+				if map2[next] == true{ // 首尾相遇，返回深度
+					return depth+1
+				}
+				if visited[next] == false{
+					tmpMap[next] = true
+					visited[next] = true
 				}
 			}
+			delete(map1, k)
 		}
+		map1, map2 = map2, tmpMap // map怎么交换？？？？？？
 	}
 	return 0
 }
 
+func hasEndWord(s string, wordList []string) bool {
+	for _,v := range wordList{
+		if s == v{
+			return true
+		}
+	}
+	return false
+}
+
 func connect(word string, wordList []string) []string {
 	// 返回和word只有1字符之差的所有字符串
-	result := []string{}
+	result := make([]string, 0, len(wordList))
 	for _, str := range wordList {
 		if discOneChar(word, str) {
 			result = append(result, str)
@@ -47,6 +67,9 @@ func discOneChar(s, t string) bool {
 	for i := 0; i < len(s); i++ {
 		if s[i] != t[i] {
 			cnt++
+			if cnt > 1{
+				return false
+			}
 		}
 	}
 	return cnt == 1

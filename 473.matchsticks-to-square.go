@@ -35,7 +35,7 @@ func generate(i int, nums []int, target int, bucket []int) bool{
 			continue
 		}
 		bucket[k] += nums[i]
-		// 递归的时候不用管i范围
+		// 递归的时候不用管i范围，在一进入该函数是进行递归终止条件判断是已经处理过了
 		// 此处是true的时候找到合适的组合，直接返回即可，不需要后续的遍历了
 		if generate(i-1, nums, target, bucket) == true{
 			return true//已经找到合适的组合，直接跳出递归，返回true

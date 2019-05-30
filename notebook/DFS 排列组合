@@ -1,0 +1,56 @@
+1. Combination 组合
+    C(m, n) 一共m个元素里面挑选n个元素
+    func dfs(s, n int, path []int,nums []int, result *[][]int){
+        if len(path) == n{
+            data := make([]int, len(path))
+            copy(data, path)
+            *result = append((*result), path)
+            return 
+        }
+
+        for i:=s; i<len(nums); i++{
+            path = append(path, nums[i])
+            dfs(i+1, n, path, nums, result)
+            path = path[:len(path)-1]
+        }
+    }
+
+    位运算， 组合C(m, n)
+    func combinationbit(nums []int) [][]int{
+        result := [][]int{}
+        count := 1 << uint(len(nums)) // 一共2^n种可能
+        for i:=0; i<count; i++ { // 遍历每一种可能
+            path := make([]int, 0, len(nums)) //暂存单条结果
+            for j:=0; j<len(nums); j++{//遍历每个元素是否存在
+                if i & (1<<j) != 0{ // 第j位为1，表示该元素存在
+                    tmp := append(tmp, nums[j])
+                }
+            }
+            data := make([]int, len(tmp))
+            copy(data, tmp)
+            *result = append((*result), data)
+        }
+        return result
+    }
+    
+2. Permutation 排列
+    P(m, n)
+    var visited = make([]bool, len(nums))
+    func dfs(n int, path []int,nums []int, result *[][]int){
+        if len(path) == n{
+            data := make([]int, len(path))
+            copy(data, path)
+            *result = append((*result), path)
+            return 
+        }
+
+        for i:=0; i<len(nums); i++ {
+            if visited[i] == false{// 没有访问过的节点
+                visited[i] = true
+                path = append(path, nums[i])
+                dfs(n, path, nums, result)
+                path = path[:len(path)-1]
+                visited[i] = false
+            }
+        }
+    }

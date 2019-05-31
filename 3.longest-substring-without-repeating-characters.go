@@ -3,8 +3,7 @@
  *
  * [3] Longest Substring Without Repeating Characters
  */
- // 法1: 两个指针组成子序列，map中保存出现的过的字母
-//  法2: map中缓存字母出现的位置，不是出现过没
+ // 两个指针组成子序列，map中缓存字母出现的位置，不是出现过没
 // ✘ testcase: '"abba"'
 func lengthOfLongestSubstring(s string) int {
 	count := 0

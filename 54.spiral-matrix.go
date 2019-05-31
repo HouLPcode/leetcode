@@ -3,7 +3,7 @@
  *
  * [54] Spiral Matrix
  */
-// [[1, 2, 3, 4],[5, 6, 7, 8],[9,10,11,12]] 
+// 测试 正方形，长方形横，竖 三种情况 
 func spiralOrder(matrix [][]int) []int {
 	rows := len(matrix)
 	if rows == 0{
@@ -19,22 +19,21 @@ func spiralOrder(matrix [][]int) []int {
 }
 
 // 根据左上和右下顺时针打印一圈
+// 优先闭区间
 func print(matrix [][]int, sr,sc,er,ec int, out *[]int){
-	// 上 
-	for i:=sc; i<=ec; i++ {
+	for i:=sc; i<=ec; i++ {// 上，左闭右闭，注意避免重复输出转角节点
 		(*out) = append((*out), matrix[sr][i])
 	}
-	// 右
-	for i:=sr+1; i<=er; i++ {
+	for i:=sr+1; i<=er; i++ {// 右，上开下开
 		(*out) = append((*out), matrix[i][ec])
 	}
-	// 下
-	for i:=ec-1; i>=sc; i-- {
-		(*out) = append((*out), matrix[er][i])
-	}
-	// 左
-	for i:=er-1; i>sr; i-- { // 注意避免重复输出转角节点
-		(*out) = append((*out), matrix[i][sc])
+	if sr < er && sc < ec { //一定注意此处的判断，避免一行或一列的影响
+		for i:=ec-1; i>=sc; i-- {// 下
+			(*out) = append((*out), matrix[er][i])
+		}
+		for i:=er-1; i>sr; i-- { // 左 
+			(*out) = append((*out), matrix[i][sc])
+		}
 	}
 }
 

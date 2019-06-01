@@ -1,0 +1,2 @@
+1. i.(type) 只能在switch中使用 ？？？
+2. reflect.TypeOf(x)

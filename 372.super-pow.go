@@ -3,32 +3,22 @@
  *
  * [372] Super Pow
  */
-// 错误思路: 把b组成int，然后折半相乘 
-// ****b可以无限大，导致超时。b可以无限大，无法转换成int数值
-
+// 错误思路: 把b组成int，然后折半相乘 ****b可以无限大，导致超时。b可以无限大，无法转换成int数值
+// 思路1：十进制方式 a^1234567 % k = (a^123456%k)^10 %k * (a^7 % k) % k
 func superPow(a int, b []int) int {
-	//不考虑越界问题，指定的是int
-	m := slice2int(b)
-	return pow(a,m)%1337
+	if len(b) == 1{
+		return pow(a,b[0])
+	}
+	num1 := superPow(a,b[:len(b)-1])
+	num1 = pow(num1, 10)
+	return num1 * pow(a, b[len(b)-1]) % 1337
 }
 
-func pow(x,m int)int{
-	if m == 1{
-		return x
-	}else if m == 0{
-		return 1
+func pow(a,b int) int {
+	rtn := 1
+	for ;b>0;b-- {
+		rtn = rtn%1337 * (a%1337)
 	}
-	if m&1 == 0{
-		return (pow(x,m/2)%1337)*(pow(x,m/2)%1337)
-	}else{
-		return (pow(x,m/2)%1337)*(pow(x,m/2)%1337)*x%1337
-	}
+	return rtn%1337
 }
 
-func slice2int(nums []int)int{
-	cnt := 0
-	for _,v := range nums{
-		cnt = cnt * 10 + v
-	}
-	return cnt
-}

@@ -3,19 +3,21 @@
  *
  * [482] License Key Formatting
  */
+//  224ms  19.38%
 //  "2-4A0r7-4k"\n4
 // "--a-a-a-a--"\n2
 // 题目理解有误，除第一组外，其他每组均有K个元素
+// string的拼接通过[]byte->string加速
 func licenseKeyFormatting(S string, K int) string {
 	//从右往左处理
 	out := ""
 	times := 0
 	for i:=len(S)-1; i>=0; i--{
-		if times == K{ // 放在S[i]赋值前，避免最终结果头多一个 "-"
-			times = 0
-			out = "-" + out
-		}
 		if S[i] != '-' {
+			if times == K{ // 放在S[i]赋值前，避免最终结果头多一个 "-"
+				times = 0
+				out = "-" + out
+			}
 			times++
 			if S[i] >= 'a'{ // convert uppercase
 				out = string(S[i]-'a'+'A') + out
@@ -24,6 +26,6 @@ func licenseKeyFormatting(S string, K int) string {
 			}
 		}
 	}
-	return out 	// 去除末尾 -
+	return out 	// 去除头部 -
 }
 

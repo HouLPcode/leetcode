@@ -4,36 +4,26 @@
  * [482] License Key Formatting
  */
 //  "2-4A0r7-4k"\n4
+// "--a-a-a-a--"\n2
 // 题目理解有误，除第一组外，其他每组均有K个元素
 func licenseKeyFormatting(S string, K int) string {
-	//处理第一组
+	//从右往左处理
 	out := ""
-	for i:=0; i<len(S)&&S[i]!='-'&&i<K; i++{
-		out += string(S[i])
-	}
-	out += "-"
-	time := 0 // 一组中字母的个数
-	for i:=len(out)-1; i<len(S); i++ {
-		if S[i] == '-'{
-
-		}else {
-			time++
-			// convert uppercase
-			if S[i] >= 'a' {
-				out += string(S[i]-'a'+'A')
+	times := 0
+	for i:=len(S)-1; i>=0; i--{
+		if times == K{ // 放在S[i]赋值前，避免最终结果头多一个 "-"
+			times = 0
+			out = "-" + out
+		}
+		if S[i] != '-' {
+			times++
+			if S[i] >= 'a'{ // convert uppercase
+				out = string(S[i]-'a'+'A') + out
 			}else {
-				out += string(S[i])
+				out = string(S[i]) + out
 			}
 		}
-		if time == K {
-			time = 0
-			out += "-"
-		}
 	}
-	// 去除末尾的 "-"
-	if out[len(out)-1] == '-'{
-		return out[:len(out)-1]
-	}
-	return out
+	return out 	// 去除末尾 -
 }
 

@@ -9,7 +9,7 @@
 SELECT Customers.Name AS Customers
 FROM Customers LEFT JOIN Orders
 ON Customers.Id = Orders.CustomerId
-WHERE Orders.CustomerId IS NULL; 
+WHERE Orders.CustomerId IS NULL; #注意此处怎么判空的
 
 -- 子查询
 -- select customers.name as 'Customers'

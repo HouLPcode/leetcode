@@ -6,10 +6,7 @@
 //  0 ms
 // 折半查找
 func mySqrt(x int) int {
-	if x == 0 || x == 1 { // 题目中指定x非负
-		return x
-	}
-	left, right := 1, x
+	left, right := 1, x // left 从1开始，避免mid为0
 	for left <= right {
 		mid := (right-left)/2 + left
 		if mid > x/mid { //注意：采用除法，防止 mid*mid 越界

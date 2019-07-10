@@ -3,7 +3,7 @@
  *
  * [392] Is Subsequence
  */
- 12 ms 92.52%
+// 4 ms 100 %
 //  两个指针直接遍历
 func isSubsequence(s string, t string) bool {
 	tl := len(t)
@@ -19,7 +19,7 @@ func isSubsequence(s string, t string) bool {
 		if j == len(t) {
 			return false
 		}
-        j++ // 一定注意，不要忘了此处的j需要后移一位
+		j++ // 一定注意，不要忘了此处的j需要后移一位
 	}
 	return i == len(s)
 }

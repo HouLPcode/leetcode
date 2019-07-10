@@ -7,15 +7,14 @@
 func arrangeCoins(n int) int {
 	// (1+r)*r/2 = n
 	// 从 1-n 折半查找合适的r
-	s, e := 1, n 
+	s, e := 1, n
 	for s <= e {
-		mid := (e-s)/2 + s 
-		if (1+mid)*mid / 2 <= n { //注意此处是小于等于
+		mid := (e-s)/2 + s
+		if (1+mid)*mid/2 <= n { //注意此处是小于等于
 			s = mid + 1
 		} else {
-			e = mid -1
+			e = mid - 1
 		}
 	}
-	return s-1 // 注意此处的-1
+	return s - 1 // 注意此处的-1
 }
-

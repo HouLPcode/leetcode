@@ -1,3 +1,8 @@
+ 1. 关注循环条件，避免死循环
+ 2. 左右分割方式， +-1问题
+ 3. 结束后的条件判断
+
+
 func bsearch(nums []int, n int) int{
     left,right := 0, len(nums)-1 // 1. 注意right的大小是 长度-1
     for left <= right{ // 2. 注意这里是小于等于
@@ -13,3 +18,52 @@ func bsearch(nums []int, n int) int{
     // 跳出循环时，left > right,表示没有找到所查找的值
     return 0
 }
+
+
+Binary Search
+1. 只和当前元素有关
+    int binarySearch(vector<int>& nums, int target){
+    if(nums.size() == 0)
+        return -1;
+
+    int left = 0, right = nums.size() - 1;
+    while(left <= right){
+        // Prevent (left + right) overflow
+        int mid = left + (right - left) / 2;
+        if(nums[mid] == target){ return mid; }
+        else if(nums[mid] < target) { left = mid + 1; }
+        else { right = mid - 1; }
+    }
+
+    // End Condition: left > right
+    return -1;
+    }
+    注意：
+        Initial Condition: left = 0, right = length-1
+        Termination: left > right
+        Searching Left: right = mid-1
+        Searching Right: left = mid+1
+2. 需要和有邻居比较的情况
+    int binarySearch(vector<int>& nums, int target){
+        if(nums.size() == 0)
+            return -1;
+
+        int left = 0, right = nums.size();
+        while(left < right){  // 此处没有==
+            // Prevent (left + right) overflow
+            int mid = left + (right - left) / 2;
+            if(nums[mid] == target){ return mid; } // 右邻居参与判断
+            else if(nums[mid] < target) { left = mid + 1; }
+            else { right = mid; }
+        }
+
+        // Post-processing:
+        // End Condition: left == right
+        if(left != nums.size() && nums[left] == target) return left; // 返回的是left，  此处需要注意循环推出的条件，有可能是没有找到符合条件的值退出的
+        return -1;
+    }
+    注意1.注意推出循环后需要判断剩余的元素是否满足条件
+        Initial Condition: left = 0, right = length
+        Termination: left == right
+        Searching Left: right = mid
+        Searching Right: left = mid+1

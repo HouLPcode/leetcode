@@ -3,46 +3,40 @@
  *
  * [34] Find First and Last Position of Element in Sorted Array
  */
- // 方法1 二分找到一个target，然后往左右扩展，找到边界
- // 方法2 分两次分别二分找左右边界，下面是该方法的实现
- func searchRange(nums []int, target int) []int {
-	rnt := []int{-1, -1}
-	start, end := 0, len(nums)-1
-	mid := 0
-	// 分两次，分别找左边缘或右边缘
-	// 同时找连个边缘不知道什么时候break？？？
-	for start <= end {
-		mid = (end-start)/2 + start
-		if nums[mid] == target {
-			if (mid == 0) || (mid > 0 && nums[mid-1] < target) {
-				rnt[0] = mid // 找到左边缘
-				break
-			}
-			end = mid - 1 //此处的mid肯定不是0？？？
-		} else if nums[mid] < target {
-			start = mid + 1
+//8 ms 89.55 %
+// 第一次二分查找左边界，第二次从该边界值开始查找
+func searchRange(nums []int, target int) []int {
+	rtn := []int{-1, -1}
+	if len(nums) == 0 { //一定注意空数组的处理，可能会导致循环推出后nums[0]访问越界
+		return rtn
+	}
+	s, e := 0, len(nums)-1
+	for s < e { // 找左边界
+		mid := (e-s)/2 + s
+		if nums[mid] >= target {
+			e = mid
 		} else {
-			end = mid - 1
+			s = mid + 1
 		}
 	}
-	if rnt[0] == -1 { //没找到左边缘
-		return rnt
+	if nums[s] != target {
+		return rtn
 	}
-	// start = mid 有可能只有一个target值，此处不是start=mid+1
-	start, end = mid, len(nums)-1 // 重新赋值，避免上轮循环的影响
-	for start <= end {
-		mid = (end-start)/2 + start
-		if nums[mid] == target {
-			if (mid == len(nums)-1) || mid < len(nums)-1 && nums[mid+1] > target {
-				rnt[1] = mid //找到右边缘
-				break
-			}
-			start = mid + 1
-		} else if nums[mid] < target {
-			start = mid + 1
+	rtn[0] = s
+	e = len(nums) - 1
+	for s+1 < e { // 找右边界
+		mid := (e-s)/2 + s
+		if nums[mid] > target {
+			e = mid - 1
 		} else {
-			end = mid - 1
+			// ==
+			s = mid
 		}
 	}
-	return rnt
+	if nums[e] == target {
+		rtn[1] = e
+	} else {
+		rtn[1] = s
+	}
+	return rtn
 }

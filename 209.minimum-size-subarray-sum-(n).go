@@ -3,8 +3,8 @@
  *
  * [209] Minimum Size Subarray Sum
  */
-//  8 ms 36.43 %
-//  O(n),待优化为O(n log n)
+//  8 ms 36.43 % O(n^2)???????????????????
+//  O(n),待优化，  O(n log n)
 // 从左往右，双指针遍历
 func minSubArrayLen(s int, nums []int) int {
 	sum := 0

@@ -1,9 +1,11 @@
+import "sort"
+
 /*
  * @lc app=leetcode id=15 lang=golang
  *
  * [15] 3Sum
  */
- func threeSum(nums []int) [][]int {
+func threeSum(nums []int) [][]int {
 	rtn := [][]int{}
 	if len(nums) < 3 { // nums == nil也可以用len
 		return rtn
@@ -17,6 +19,8 @@
 		if a > 0 && nums[a] == nums[a-1] { // 结果中去重,注意a>0条件
 			continue
 		}
+		// 采用的是首尾指针夹击的方式找两数和为某值的两个数
+		//  TODO 如果用map怎么处理？？？？？？？？？？？？？？？？？？？？？？？？？？
 		for b, c := a+1, len(nums)-1; b < c; {
 			if nums[a]+nums[b]+nums[c] == 0 { // 找到结果
 				rtn = append(rtn, []int{nums[a], nums[b], nums[c]})

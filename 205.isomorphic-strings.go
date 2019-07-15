@@ -5,9 +5,10 @@
  */
 // 0 ms
 //  "ab"\n"aa"
+//  "ab"\n"ca"
 func isIsomorphic(s string, t string) bool {
 	convMap := make(map[byte]byte, len(s))
-	tused := make(map[byte]bool, len(s))
+	tused := make(map[byte]bool, len(s)) // 一定注意此处需要统计t中元素是否使用过
 	// if len(s) != len(t) { // 题目给出长度相同
 	// 	return false // 防止长度不同导致下面循环访问越界
 	// }

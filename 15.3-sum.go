@@ -5,6 +5,7 @@ import "sort"
  *
  * [15] 3Sum
  */
+// [0,0,0,0]
 func threeSum(nums []int) [][]int {
 	rtn := [][]int{}
 	if len(nums) < 3 { // nums == nil也可以用len

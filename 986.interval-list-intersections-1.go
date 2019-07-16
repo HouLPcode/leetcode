@@ -4,7 +4,6 @@
  * [986] Interval List Intersections
  */
 // 44 ms, faster than 57.66%
-// 怎么确定合并的顺序？？？
 func intervalIntersection(A [][]int, B [][]int) [][]int {
 	rtn := make([][]int, 0)
 	lA, lB := len(A), len(B)

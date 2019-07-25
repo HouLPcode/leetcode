@@ -1,26 +1,39 @@
+import (
+	"sort"
+	"strconv"
+)
+
 /*
  * @lc app=leetcode id=179 lang=golang
  *
  * [179] Largest Number
  */
+//  0 ms
+// [3,30,34]
+// [0,0]
+// [0]
+// 拼接两个数后再比较 直接左右两边拼接成字符串后，取较大的那一个
+// 通过strconv.FormatInt代替fmt.Sprint优化
 func largestNumber(nums []int) string {
-	// 直接左右两边拼接成字符串后，取较大的那一个
-	// 典型错误，0存在的时候局部最优不是最终最优 [0,9,8,7,6,5,4,3,2,1]
-	str := ""
-	cnt0 := 0
-	for _,v := range nums{
-		if v == 0{
-			cnt0++
-			continue
-		}
-		if strings.Compare(str+fmt.Sprint(v),fmt.Sprint(v)+str) > 0{
-			str = str+fmt.Sprint(v)
-		} else{
-			str = fmt.Sprint(v) + str
-		}
+	sort.Slice(nums, func(i, j int) bool {
+		// str1 := fmt.Sprint(nums[i])
+		// str2 := fmt.Sprint(nums[j])
+
+		// str1 := fmt.Sprint(nums[i]) + fmt.Sprint(nums[j]) // 写道一个sprint中间会出现空格
+		// str2 := fmt.Sprint(nums[j]) + fmt.Sprint(nums[i])
+		// if strings.Compare(str1, str2) == -1 {
+		// 	return false
+		// }
+		// return true
+		str1, str2 := strconv.FormatInt(int64(nums[i]), 10), strconv.FormatInt(int64(nums[j]), 10)
+		return str1+str2 > str2+str1
+	})
+	rtn := ""
+	for _, v := range nums {
+		rtn += strconv.FormatInt(int64(v), 10)
 	}
-	for cnt0 > 0{
-		str += "0"
+	if len(rtn) > 0 && rtn[0] == '0' {
+		return "0"
 	}
-	return str
+	return rtn
 }

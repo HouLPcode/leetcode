@@ -12,13 +12,13 @@ import "math"
  *     Next *ListNode
  * }
  */
-//  28 ms 55.33%
+//   × testcase: '[1]'
 func insertionSortList(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
-		return nil
+		return head
 	}
-
 	out := &ListNode{math.MinInt64, nil} // 头指针
+
 	for head != nil {
 		// 从左往右找到要插入的位置
 		cur := out

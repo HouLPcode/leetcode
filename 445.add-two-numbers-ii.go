@@ -11,7 +11,7 @@
  * }
  */
 
-// 12 ms, faster than 73.33%
+// (8 ms) √ Your runtime beats 90.48 %
 // 法1 栈空间
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	stack1 := []int{}

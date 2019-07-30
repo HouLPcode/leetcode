@@ -3,7 +3,7 @@
  *
  * [838] Push Dominoes
  */
-//  8 ms, faster than 60.00%
+//  4 ms) √ Your runtime beats 100 %
 func pushDominoes(dominoes string) string {
 	doms := []byte(dominoes)
 	p0 := 0

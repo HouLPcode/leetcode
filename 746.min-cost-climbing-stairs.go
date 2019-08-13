@@ -6,7 +6,7 @@
 // (4 ms) 92.57 %
 // 典型dp
 // dp[i] 表示跳到第i阶的最小花费 最终结果dp[0]
-// dp[i] = cost[i]+ min(dp[i-1]+, dp[i-2])
+// dp[i] = cost[i]+ min(dp[i+1]+, dp[i+2]) //从i往0/1 跳
 // 初始 dp[0] = 0, dp[1] = 0
 func minCostClimbingStairs(cost []int) int {
 	dp0, dp1 := 0, 0

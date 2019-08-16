@@ -1,0 +1,170 @@
+quick sort快排 
+时间  平均O(nlogn) 最好？？？ 最坏O(nlogn)
+空间 O(1)
+不稳定
+
+func quickSort(nums []int) {
+	qsort(nums, 0, len(nums)-1)
+}
+
+func qsort(nums []int, s, e int) { // 排序区间[s,e]
+	if s >= e { // 只有一个元素
+		return
+	}
+	i := partition(nums, s, e)
+	qsort(nums, s, i-1)
+	qsort(nums, i+1, e)
+
+}
+
+// 取最后一个元素是分界点
+func partition(nums []int, s, e int) int {
+	pivot := nums[e]
+	i := s // i左侧表示小于pivot的区间，且不包括i
+
+	for j := s; j < e; j++ {
+		if nums[j] < pivot {
+			nums[i], nums[j] = nums[j], nums[i]
+			i++
+		}
+	}
+	nums[i], nums[e] = nums[e], nums[i]
+	return i
+}
+
+merge sort 归并排序
+时间 O(nlogn), 执行效率与要排序的原始数组的有序程度无关，所以其时间复杂度是非常稳定的，不管是最好情况、最坏情况，还是平均情况，时间复杂度都是O(nlogn)
+空间 O(n)
+稳定的
+func MergeSort(arr []int) {
+	arrLen := len(arr)
+	if arrLen <= 1 {
+		return
+	}
+
+	mergeSort(arr, 0, arrLen-1)
+}
+
+func mergeSort(arr []int, start, end int) {
+	if start >= end {
+		return
+	}
+
+	mid := (start + end) / 2
+	mergeSort(arr, start, mid)
+	mergeSort(arr, mid+1, end)
+	merge(arr, start, mid, end)
+}
+
+func merge(arr []int, start, mid, end int) {
+	tmpArr := make([]int, end-start+1)
+
+	i := start
+	j := mid + 1
+	k := 0
+	for ; i <= mid && j <= end; k++ {
+		if arr[i] < arr[j] {
+			tmpArr[k] = arr[i]
+			i++
+		} else {
+			tmpArr[k] = arr[j]
+			j++
+		}
+	}
+
+	for ; i <= mid; i++ {
+		tmpArr[k] = arr[i]
+		k++
+	}
+	for ; j <= end; j++ {
+		tmpArr[k] = arr[j]
+		k++
+	}
+	copy(arr[start:end+1], tmpArr)
+}
+
+
+1. bubble sort 冒泡排序 实际中不用
+时间： 平均O(n^2) 最好O(n) 最坏O(n^2)
+空间： O(1)
+稳定的
+
+//冒泡排序，a是数组，n表示数组大小
+func BubbleSort(a []int) {
+	if len(a) <= 1 {
+		return
+	}
+	for i := 0; i < len(a); i++ {
+		// 提前退出标志
+		flag := false
+		for j := 0; j < len(a)-i-1; j++ {
+			if a[j] > a[j+1] {
+				a[j], a[j+1] = a[j+1], a[j] //此次冒泡有数据交换
+				flag = true
+			}
+		}
+		
+		if !flag { // 如果没有交换数据，提前退出
+			break
+		}
+	}
+}
+
+2. insert sort 插入排序 实际中有用
+时间： 平均O(n^2) 最好O(n) 最坏O(n^2)
+空间： O(1)
+稳定的
+
+我们将数组中的数据分为两个区间， 已排序区间和未排序区间。初始已排序区间只有一个元素，就是数组的第一个元素。插入算法的核心思想是取未排序区间中的元素，在已排序区间中找到合适的插入位置将其插入，并保证已排序区间数据一直有序。重复这个过程，直到未排序区间中元素为空，算法结束。
+
+// 插入排序，a表示数组，n表示数组大小
+func InsertionSort(a []int, n int) {
+	if n <= 1 {
+		return
+	}
+	for i := 1; i < n; i++ {
+		value := a[i]
+		j := i - 1
+		//查找要插入的位置并移动数据
+		for ; j >= 0; j-- {
+			if a[j] > value {
+				a[j+1] = a[j]
+			} else {
+				break
+			}
+		}
+		a[j+1] = value
+	}
+}
+
+3. select sort 选择排序  实际中不用
+时间： 平均O(n^2) 最好O(n^2) 最坏O(n^2)
+空间： O(1)
+不稳定
+
+每次从剩余数据中选择最值，交换数据
+
+// 选择排序，a表示数组，n表示数组大小
+func SelectionSort(a []int, n int) {
+	if n <= 1 {
+		return
+	}
+	for i := 0; i < n; i++ {
+		// 查找最小值
+		minIndex := i
+		for j := i + 1; j < n; j++ {
+			if a[j] < a[minIndex] {
+				minIndex = j
+			}
+		}
+		// 交换
+		a[i], a[minIndex] = a[minIndex],a[i]
+
+	}
+}
+
+
+线性排序 
+
+桶排序、计数排序、基数排序
+

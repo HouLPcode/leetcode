@@ -5,7 +5,7 @@
  */
 // 8ms 49.44%
 // 还有一种 DP方式实现
-// 回溯法 实现如下
+// 递归法 实现如下
 // 假设模式中没有 * ，代码实现如下
 // func isMatch(s string, p string) bool {
 // 	if len(p) == 0 {

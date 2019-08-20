@@ -48,21 +48,21 @@ func bfs(root TreeNode){
         return 
     }
 
-    queue = [] //创建队列
+    queue := []*TreeNode{}  //创建队列
     visited := make(map[TreeNode]bool)
 
-    queue.push(root) // 入队
+    queue = append(queue, root) // 入队
     visited[root] = true
 
-    for !queue.Isempty(){
-        node = queue.Pop()//出队
-        visited[node] = true
-        
+    for len(queue) != 0{
+        node := queue[0] 
+		queue = queue[1:]//出队
+        visited[node] = true       
         // 处理node节点
 
-        //自队列入队
-        for nodeNext := range node.Childen(){
-            queue.push(nodeNext)
+        // 子节点入队
+        for nodeNext := range node.Childen(){ // node.Left != nil or node.Right != nil
+            queue = append(queue, node.Left)
         }
     }
 }

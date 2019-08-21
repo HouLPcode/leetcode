@@ -12,16 +12,15 @@
  * }
  */
 
- // 递归实现
+// 递归实现
 func maxDepth(root *TreeNode) int {
-  if root == nil{
+	if root == nil {
 		return 0
 	}
 	ldep := maxDepth(root.Left)
 	rdep := maxDepth(root.Right)
-	if ldep < rdep{
+	if ldep < rdep {
 		return 1 + rdep
 	}
 	return 1 + ldep
 }
-

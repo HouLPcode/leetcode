@@ -10,6 +10,7 @@ import (
 //  (44 ms)   √ Your runtime beats 54.17 %
 // minHeap 实现
 // 先插入首列所有数据，然后弹出一个数据，将该数据所在行的下一个数据push
+// TODO 还有另一种方法，二分法实现？？？？？？？？？
 type Node struct {
 	R, C, Val int
 }

@@ -14,11 +14,14 @@
 // 12 ms, faster than 68.85%
 // map缓存所有结果
 func findFrequentTreeSum(root *TreeNode) []int {
-	tmp := make(map[int]int)
-	sum(root, tmp)
+	if root == nil {
+		return []int{}
+	}
+	counter := make(map[int]int)
+	sum(root, counter)
 	maxTime := -1
 	rtn := []int{}
-	for k, v := range tmp {
+	for k, v := range counter {
 		if v > maxTime {
 			maxTime = v
 			rtn = append(rtn, k)
@@ -34,14 +37,7 @@ func sum(root *TreeNode, tmp map[int]int) int {
 	if root == nil {
 		return 0
 	}
-	l, r := 0, 0
-	if root.Left != nil {
-		l = sum(root.Left, tmp)
-	}
-	if root.Right != nil {
-		r = sum(root.Right, tmp)
-	}
-
-	tmp[l+r+root.Val]++ // 只在此处统计一次结果，在上面的left或right判断中不记录，否则会导致多计算一次
-	return l + r + root.Val
+	data := sum(root.Left, tmp) + sum(root.Right, tmp) + root.Val
+	tmp[data]++
+	return data
 }

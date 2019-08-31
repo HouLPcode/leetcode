@@ -11,7 +11,7 @@
  *     Right *TreeNode
  * }
  */
-//28 ms, faster than 38.55%
+//28 ms, faster than 38.55% 不用优化，最多只是map缓存
 // 0
 func generateTrees(n int) []*TreeNode {
 	if n == 0 {
